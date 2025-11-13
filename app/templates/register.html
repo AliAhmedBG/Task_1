@@ -1,8 +1,67 @@
 {% extends 'base.html' %}
+{% block title %}Register{% endblock %}
 {% block content %}
+
+<h1>Register</h1>
+
+<!--novalidate disables browser validation so server side validation is always the one thats used-->
 <form method="POST" novalidate>
-    <input name="name" placeholder="Enter your name">
-    <input type="submit" value="Register">
+    {{ form.hidden_tag() }}
+
+    <!--Username field and its errors-->
+    <p>
+        {{ form.username.label }}<br>
+        {{ form.username }}<br>
+        {% for error in form.username.errors %}
+            <span>{{ error }}</span><br>
+        {% endfor %}
+    </p>
+
+    <!--Email field and all its errors-->
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email }}<br>
+        {% for error in form.email.errors %}
+            <span>{{ error }}</span><br>
+        {% endfor %}
+    </p>
+
+    <!--Password field and its errors -->
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password }}<br>
+        {% for error in form.password.errors %}
+            <span>{{ error }}</span><br>
+        {% endfor %}
+    </p>
+
+    <!--confirm password field and its errors -->
+    <p>
+        {{ form.confirmPassword.label }}<br>
+        {{ form.confirmPassword }}<br>
+        {% for error in form.confirmPassword.errors %}
+            <span>{{ error }}</span><br>
+        {% endfor %}
+    </p>
+
+    <!--Bio field and its errors-->
+    <p>
+        {{ form.bio.label }}<br>
+        {{ form.bio(rows=5) }}<br>
+        {% for error in form.bio.errors %}
+            <span>{{ error }}</span><br>
+        {% endfor %}
+    </p>
+
+    <p>{{ form.submit() }}</p>
 </form>
-<p>Hello {{ name | safe }}</p>
+
+<!--Checks ff a sanitised bio was passed from the view and it shows it back to the user if so-->
+{% if bio %}
+    <hr>
+    <h2>Your bio (after sanitisation)</h2>
+<!--since the bio was already been cleaned with bleach we can mark it as safe-->
+    <div>{{ bio | safe }}</div>
+{% endif %}
+
 {% endblock %}

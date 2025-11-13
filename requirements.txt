@@ -1,1 +1,4 @@
 flask
+Flask-WTF
+email-validator
+bleach
